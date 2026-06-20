@@ -191,7 +191,7 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen max-h-screen overflow-hidden bg-transparent flex flex-col transition-colors duration-300 font-plus text-zinc-400">
+    <div className="min-h-screen bg-transparent flex flex-col transition-colors duration-300 font-plus text-zinc-400">
       
       {/* Header Row */}
       <header className="bg-slate-950/20 backdrop-blur-md border-b border-white/10 px-6 py-4 shrink-0 shadow-lg print:hidden sticky top-0 z-40">
@@ -243,10 +243,10 @@ export default function App() {
       </header>
 
       {/* Main Workspace Split-Screen */}
-      <main className="flex-1 w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-8 overflow-hidden print:p-0 print:m-0 print:block box-border h-[calc(100vh-100px)]">
+      <main className="flex-1 w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-8 print:p-0 print:m-0 print:block box-border">
         
         {/* Left Panel: Input & Controls (Editor Column) */}
-        <section className="editor-container w-full h-full flex flex-col gap-6 overflow-auto pr-1 pb-4 scrollbar-thin print:hidden box-border">
+        <section className="editor-container w-full flex flex-col gap-6 print:hidden box-border">
           
           {/* Reference Upload Box */}
           <div className="glass-panel border-vibgyor rounded-xl p-5 glow-card space-y-3">
@@ -295,7 +295,7 @@ export default function App() {
         </section>
 
         {/* Right Panel: Preview Column */}
-        <section className="preview-container w-full h-full glass-panel rounded-xl overflow-hidden glow-card flex flex-col print:border-none print:shadow-none print:bg-white print:p-0 print:m-0 print:block box-border">
+        <section className="preview-container w-full glass-panel rounded-xl overflow-hidden glow-card flex flex-col print:border-none print:shadow-none print:bg-white print:p-0 print:m-0 print:block box-border">
           <DocumentPreview
             htmlContent={generatedDocument}
             onContentChange={setGeneratedDocument}

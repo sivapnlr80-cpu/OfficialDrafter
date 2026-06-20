@@ -46,12 +46,15 @@ Drafting Guidelines:
 
    - REFERENCE NUMBER & DATE (LETTER): If Document Type is 'Letter', the Reference Number and Date MUST be combined into a single line, centered horizontally on the page, and underlined. Follow this exact format: '<u>Rc.No.25/2026, dated: 20-06-2026</u>' (note: no space in 'Rc.No.', lowercase 'd' in 'dated', and a comma separating them). If the user-provided form values are empty, use underlines: '<u>Rc.No._________, dated: _________</u>'.
 
-   - MEMO FORMATTING & HEADER (CRITICAL): If the Document Type is 'Memo' (or 'memorandum'), you MUST apply these strict layout and formatting rules:
-     1. MEMO HEADER: The main centered header at the very top of the A4 page MUST always be exactly:
-        MEMORANDUM OF THE DIVISIONAL COOPERATIVE OFFICER, NELLORE
-        Directly on the next line, you MUST add:
-        SRI K. VENKATESWARLU, M.A.
-        Both lines MUST be centered, bold, and uppercase. Do NOT use the reference document's header (e.g. "OFFICE OF THE DISTRICT COOPERATIVE OFFICER, NELLORE" or "OFFICE OF THE DIVISIONAL COOPERATIVE OFFICER, NELLORE") if it differs.
+   - MEMO & PROCEEDINGS FORMATTING & HEADER (CRITICAL): If the Document Type is 'Memo' (or 'memorandum') or 'Proceedings', you MUST apply these strict layout and formatting rules:
+     1. HEADER: 
+        - For 'Memo' format, the main centered header at the very top of the A4 page MUST always be exactly:
+          MEMORANDUM OF THE DIVISIONAL COOPERATIVE OFFICER, NELLORE
+        - For 'Proceedings' format, the main centered header at the very top of the A4 page MUST always be exactly:
+          PROCEEDINGS OF THE DIVISIONAL COOPERATIVE OFFICER, NELLORE
+        - Directly on the next line for both formats, you MUST add:
+          SRI K. VENKATESWARLU, M.A.
+        - Both lines MUST be centered, bold, and uppercase. Do NOT use the reference document's header (e.g. "OFFICE OF THE DISTRICT COOPERATIVE OFFICER, NELLORE" or "OFFICE OF THE DIVISIONAL COOPERATIVE OFFICER, NELLORE") if it differs.
      2. REMOVE CLOSING SALUTATIONS & OFFICER NAME: In the signature block at the bottom right of the page, you MUST REMOVE the closing greetings like "Yours faithfully," and you MUST REMOVE the officer's name ("SRI K. VENKATESWARLU, M.A." or any other name). The signature block must ONLY contain the designation (e.g. "DIVISIONAL COOPERATIVE OFFICER") and location (e.g. "NELLORE") in uppercase, centered relative to itself. For example:
         <div style="float: right; text-align: center; width: 280px; line-height: 1.15; margin-top: 30px; margin-bottom: 20px; font-family: 'Times New Roman';">
         DIVISIONAL COOPERATIVE OFFICER,<br>NELLORE
@@ -95,7 +98,7 @@ Drafting Guidelines:
        <div style="float: right; text-align: center; width: 280px; line-height: 1.15; margin-top: 30px; margin-bottom: 20px; font-family: 'Times New Roman';">
        Yours faithfully,<br><br><br>[OFFICER NAME]<br>[DESIGNATION],<br>[OFFICE DETAILS]
        </div>
-     - For 'Memo' format, you MUST REMOVE "Yours faithfully," and REMOVE the officer name. Only output the designation. The container should be styled like:
+     - For 'Memo' and 'Proceedings' formats, you MUST REMOVE "Yours faithfully," and REMOVE the officer name. Only output the designation. The container should be styled like:
        <div style="float: right; text-align: center; width: 280px; line-height: 1.15; margin-top: 30px; margin-bottom: 20px; font-family: 'Times New Roman';">
        <br><br><br>[DESIGNATION],<br>[OFFICE DETAILS]
        </div>

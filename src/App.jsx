@@ -243,7 +243,7 @@ export default function App() {
       </header>
 
       {/* Main Workspace Split-Screen */}
-      <main className="flex-1 w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-hidden print:p-0 print:m-0 print:block box-border h-[calc(100vh-100px)]">
+      <main className="flex-1 w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-8 overflow-hidden print:p-0 print:m-0 print:block box-border h-[calc(100vh-100px)]">
         
         {/* Left Panel: Input & Controls (Editor Column) */}
         <section className="editor-container w-full h-full flex flex-col gap-6 overflow-auto pr-1 pb-4 scrollbar-thin print:hidden box-border">

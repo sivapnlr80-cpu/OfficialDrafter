@@ -208,6 +208,16 @@ export default function App() {
             </div>
           </div>
           
+          {/* Reference Upload Section in Header */}
+          <div className="hidden lg:flex items-center gap-4 border border-cyan-500/20 bg-cyan-950/10 p-2 px-3.5 rounded-xl backdrop-blur-sm">
+            <ReferenceUpload
+              onUploadSuccess={handleUploadSuccess}
+              onError={handleParserError}
+              currentReference={currentReference}
+              variant="header"
+            />
+          </div>
+
           <div className="flex items-center gap-2">
             {/* API key warning indicator */}
             {!settings.apiKey && (

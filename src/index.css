@@ -1,0 +1,326 @@
+@import "tailwindcss";
+
+@theme {
+  --font-space: "Space Grotesk", sans-serif;
+  --font-plus: "Plus Jakarta Sans", sans-serif;
+  --shadow-a4: 0 20px 40px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-neon: 0 0 15px rgba(6, 182, 212, 0.15);
+  --shadow-neon-hover: 0 0 25px rgba(59, 130, 246, 0.3);
+}
+
+@layer base {
+  body {
+    font-family: var(--font-plus);
+    @apply antialiased text-zinc-400 bg-[#08090d] transition-colors duration-300;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.08) 0%, transparent 60%),
+      radial-gradient(circle at 15% 30%, rgba(217, 119, 6, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+/* Custom Scrollbars */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.01);
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.3);
+}
+
+/* Glassmorphic Panel Design System */
+.glass-panel {
+  background: rgba(10, 10, 14, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+.glow-card {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.01);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glow-card:hover {
+  border-color: rgba(6, 182, 212, 0.25);
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.05);
+}
+
+/* Cyber Elements */
+.cyber-input {
+  background: #ffffff !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 8px;
+  color: #0f172a !important;
+  transition: all 0.2s ease-in-out;
+}
+.cyber-input:focus {
+  outline: none;
+  border-color: rgba(6, 182, 212, 0.8) !important;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.25) !important;
+  background: #ffffff !important;
+}
+
+.cyber-button-primary {
+  background: linear-gradient(135deg, #0284c7 0%, #0891b2 100%);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  color: white;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cyber-button-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+  border-color: rgba(6, 182, 212, 0.5);
+}
+.cyber-button-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+.cyber-button-secondary {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #e4e4e7;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cyber-button-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+/* Glossy Navy Blue Button */
+.glossy-navy-blue {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 
+              0 4px 15px rgba(15, 23, 42, 0.4);
+  color: #f1f5f9;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glossy-navy-blue:hover:not(:disabled) {
+  background: linear-gradient(180deg, #2d3d52 0%, #152033 100%);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 
+              0 0 15px rgba(30, 41, 59, 0.5);
+  color: white;
+}
+.glossy-navy-blue:active:not(:disabled) {
+  transform: scale(0.985);
+}
+
+/* VIBGYOR Border Gradient */
+.border-vibgyor {
+  position: relative;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+}
+.border-vibgyor::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -1;
+  margin: -1px;
+  border-radius: inherit;
+  background: linear-gradient(to right, 
+    rgba(139, 92, 246, 0.45),
+    rgba(79, 70, 229, 0.45),
+    rgba(59, 130, 246, 0.45),
+    rgba(16, 185, 129, 0.45),
+    rgba(234, 179, 8, 0.45),
+    rgba(249, 115, 22, 0.45),
+    rgba(239, 68, 68, 0.45)
+  );
+  pointer-events: none;
+}
+
+/* Glossy Minimalist Text Font Style */
+.glossy-text {
+  font-family: var(--font-space);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  background: linear-gradient(180deg, #ffffff 40%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.08));
+}
+/* Holographic Grid Backdrop for A4 preview */
+.hologram-grid {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+}
+
+/* A4 Page Simulation for screen rendering - Futuristic Minimalist */
+.a4-page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 25mm 20mm 25mm 30mm; /* Standard official margins (30mm left for binding/filing) */
+  margin: 0 auto;
+  background: #ffffff !important; /* Document preview paper is always white */
+  color: #0f0f11 !important; /* Document preview text is always black/dark */
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6), 0 0 40px rgba(59, 130, 246, 0.05);
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Typography styles based on selected language */
+.font-english {
+  font-family: Tahoma, Verdana, sans-serif !important;
+  font-size: 12pt !important;
+}
+
+.font-telugu {
+  font-family: Gautami, "Telugu Sangam MN", sans-serif !important;
+  font-size: 12pt !important;
+}
+
+/* Formatting for futuristic and attractive minimalist official documents */
+.a4-content {
+  color: #111111 !important;
+  line-height: 1.65;
+  letter-spacing: 0.1px;
+}
+
+.a4-content p {
+  margin: 0 0 14pt 0;
+  color: #111111 !important;
+  text-align: justify;
+}
+
+.a4-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15pt 0;
+  font-size: 11pt;
+}
+
+.a4-content table, 
+.a4-content th, 
+.a4-content td {
+  border: 1.5px solid #111111 !important;
+}
+
+.a4-content th, 
+.a4-content td {
+  padding: 6pt 8pt;
+  text-align: left;
+  vertical-align: top;
+  color: #111111 !important;
+}
+
+.a4-content th {
+  background-color: #f1f5f9 !important;
+  font-weight: bold;
+}
+
+.a4-content h1, 
+.a4-content h2, 
+.a4-content h3 {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 14pt;
+  text-transform: uppercase;
+  color: #000000 !important;
+  font-size: 13pt;
+  letter-spacing: 0.8px;
+}
+
+.a4-content ul {
+  list-style-type: disc;
+  padding-left: 20pt;
+  margin-bottom: 12pt;
+}
+
+.a4-content ol {
+  list-style-type: decimal;
+  padding-left: 20pt;
+  margin-bottom: 12pt;
+}
+
+.a4-content li {
+  margin-bottom: 5pt;
+  color: #111111 !important;
+}
+
+/* Scanning Pulse Effect */
+@keyframes scanning {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(100%); }
+  100% { transform: translateY(-100%); }
+}
+
+.scanning-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.8), transparent);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.8);
+  animation: scanning 3s linear infinite;
+  pointer-events: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Print CSS Stylesheet */
+@media print {
+  body * {
+    visibility: hidden !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  
+  #document-preview-container, 
+  #document-preview-container * {
+    visibility: visible !important;
+  }
+  
+  #document-preview-container {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    margin: 0 !important;
+    padding: 25mm 20mm 25mm 30mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  
+  html, body {
+    width: 210mm !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+  
+  @page {
+    size: A4;
+    margin: 0;
+  }
+}

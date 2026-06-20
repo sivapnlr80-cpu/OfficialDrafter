@@ -46,6 +46,22 @@ Drafting Guidelines:
 
    - REFERENCE NUMBER & DATE (LETTER): If Document Type is 'Letter', the Reference Number and Date MUST be combined into a single line, centered horizontally on the page, and underlined. Follow this exact format: '<u>Rc.No.25/2026, dated: 20-06-2026</u>' (note: no space in 'Rc.No.', lowercase 'd' in 'dated', and a comma separating them). If the user-provided form values are empty, use underlines: '<u>Rc.No._________, dated: _________</u>'.
 
+   - MEMO FORMATTING & HEADER (CRITICAL): If the Document Type is 'Memo' (or 'memorandum'), you MUST apply these strict layout and formatting rules:
+     1. MEMO HEADER: The main centered header at the very top of the A4 page MUST always be exactly:
+        MEMORANDUM OF THE DIVISIONAL COOPERATIVE OFFICER, NELLORE
+        Directly on the next line, you MUST add:
+        SRI K. VENKATESWARLU, M.A.
+        Both lines MUST be centered, bold, and uppercase. Do NOT use the reference document's header (e.g. "OFFICE OF THE DISTRICT COOPERATIVE OFFICER, NELLORE" or "OFFICE OF THE DIVISIONAL COOPERATIVE OFFICER, NELLORE") if it differs.
+     2. REMOVE CLOSING SALUTATIONS & OFFICER NAME: In the signature block at the bottom right of the page, you MUST REMOVE the closing greetings like "Yours faithfully," and you MUST REMOVE the officer's name ("SRI K. VENKATESWARLU, M.A." or any other name). The signature block must ONLY contain the designation (e.g. "DIVISIONAL COOPERATIVE OFFICER") and location (e.g. "NELLORE") in uppercase, centered relative to itself. For example:
+        <div style="float: right; text-align: center; width: 280px; line-height: 1.15; margin-top: 30px; margin-bottom: 20px; font-family: 'Times New Roman';">
+        DIVISIONAL COOPERATIVE OFFICER,<br>NELLORE
+        </div>
+     3. ADD TO RECIPIENT BLOCK ON BOTTOM LEFT: You MUST add a "To" recipient block on the bottom-left side of the page, below the main body. Align it to the left side. For example:
+        <div style="float: left; text-align: left; margin-top: 30px; font-family: 'Times New Roman'; font-size: 14px;">
+        To<br>
+        [Recipient Name/Designation/Address details or underlines if not specified]
+        </div>
+
    - BODY PARAGRAPHS ALIGNMENT (CRITICAL): The body paragraphs and general text content of the letter MUST be justified (text-align: justify) or left-aligned. Do NOT center the body text, paragraphs, subject line, references, or distribution lists. They must look like a standard official letter. Only the main header and the reference number/date line are centered on the page.
 
      Standard Letter Header Layout:
@@ -74,10 +90,15 @@ Drafting Guidelines:
 4. HTML FORMATTING OUTPUT REQUIREMENT:
    To display this document beautifully on our A4 preview screen, you MUST wrap the generated document inside a single \`<document_html>\` tag. Inside this tag, write clean HTML code using only standard elements (div, p, table, tr, th, td, ol, ul, li, span, br) and Tailwind CSS classes or inline styles.
    - Use Serif fonts (font-serif / Times New Roman).
-   - SIGNATURE ALIGNMENT (CRITICAL): The signature block (containing closing greetings like "Yours faithfully,", name, designation, and office details) MUST be aligned to the right side of the document. The text INSIDE this block must be centered relative to itself (acting as a centered stamp). Spacing between lines must be tight with NO double line breaks or extra margin. Wrap it in a container styled like:
-     <div style="float: right; text-align: center; width: 280px; line-height: 1.15; margin-top: 30px; margin-bottom: 20px; font-family: 'Times New Roman';">
-     Yours faithfully,<br><br><br>[OFFICER NAME]<br>[DESIGNATION],<br>[OFFICE DETAILS]
-     </div>
+   - SIGNATURE ALIGNMENT (CRITICAL): The signature block MUST be aligned to the right side of the document. The text INSIDE this block must be centered relative to itself (acting as a centered stamp). Spacing between lines must be tight with NO double line breaks or extra margin. Wrap it in a container:
+     - For 'Letter' format, wrap it in a container styled like:
+       <div style="float: right; text-align: center; width: 280px; line-height: 1.15; margin-top: 30px; margin-bottom: 20px; font-family: 'Times New Roman';">
+       Yours faithfully,<br><br><br>[OFFICER NAME]<br>[DESIGNATION],<br>[OFFICE DETAILS]
+       </div>
+     - For 'Memo' format, you MUST REMOVE "Yours faithfully," and REMOVE the officer name. Only output the designation. The container should be styled like:
+       <div style="float: right; text-align: center; width: 280px; line-height: 1.15; margin-top: 30px; margin-bottom: 20px; font-family: 'Times New Roman';">
+       <br><br><br>[DESIGNATION],<br>[OFFICE DETAILS]
+       </div>
      Ensure there are no <p> tags inside this signature container that add default paragraph margins; use <br> for line breaks.
    - Design official tables (e.g. lists of PACS status) with clean borders (\`border border-black\`), light gray headers, and compact paddings. Do NOT add borders to the top From/To table.
    - Do NOT output any markdown blocks (like \`\`\`html) around the \`<document_html>\` tag, just write the XML-like tag and the HTML inside it directly.

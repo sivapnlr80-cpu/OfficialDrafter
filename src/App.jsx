@@ -50,8 +50,8 @@ export default function App() {
   const [formData, setFormData] = useState({
     from: '',
     to: '',
-    officerName: 'John Doe', // Default values from the example scenario
-    designation: 'District Cooperative Officer',
+    officerName: 'SRI K. VENKATESWARLU, M.A.',
+    designation: 'Divisional Cooperative Officer, Nellore',
     rcNo: '',
     docDate: ''
   });

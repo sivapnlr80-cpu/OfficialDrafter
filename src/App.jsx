@@ -199,7 +199,7 @@ export default function App() {
           <div className="flex items-center gap-4">
             <img src="/logo.png" alt="Official Drafter Logo" className="w-24 h-24 object-contain rounded-2xl border-2 border-emerald-500/30 shadow-[0_0_30px_rgba(16,185,129,0.3)] bg-[#07070a] p-1.5" />
             <div>
-              <h1 className="text-2xl font-extrabold font-space tracking-tight text-white bg-gradient-to-r from-emerald-400 via-white to-amber-300 bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(16,185,129,0.25)]">
+              <h1 className="text-2xl font-extrabold font-space tracking-tight text-white bg-gradient-to-r from-[#ff9933] via-white to-[#138808] bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(255,153,51,0.25)]">
                 OFFICIAL DRAFTER
               </h1>
               <p className="text-[10px] text-amber-400 font-semibold tracking-wider font-space uppercase">

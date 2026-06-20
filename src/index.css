@@ -199,6 +199,10 @@
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
+  
+  /* Scale down the preview sheet slightly so it fits the viewport column and is easily previewable */
+  transform: scale(0.85) !important;
+  transform-origin: center center !important;
 }
 
 /* Typography styles based on selected language */
@@ -337,6 +341,7 @@
     border: none !important;
     background: #ffffff !important;
     color: #000000 !important;
+    transform: none !important;
   }
   
   html, body {

@@ -6,6 +6,7 @@ export const callLLM = async ({
   apiKey,
   model,
   referenceText,
+  referenceBase64,
   docType,
   metadata,
   draftingLanguage,
@@ -191,7 +192,7 @@ Generate the updated document wrapped in \`<document_html>...</document_html>\`.
 
   // Invoke the API based on the provider
   if (provider === 'gemini') {
-    return await callGeminiAPI(apiKey, model, prompt);
+    return await callGeminiAPI(apiKey, model, prompt, referenceBase64);
   } else if (provider === 'openai') {
     return await callOpenAIAPI(apiKey, model, prompt);
   } else if (provider === 'anthropic') {
@@ -204,8 +205,23 @@ Generate the updated document wrapped in \`<document_html>...</document_html>\`.
 /**
  * Call Google Gemini API
  */
-const callGeminiAPI = async (apiKey, model, prompt) => {
+const callGeminiAPI = async (apiKey, model, prompt, referenceBase64 = null) => {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  
+  const parts = [
+    {
+      text: prompt
+    }
+  ];
+
+  if (referenceBase64) {
+    parts.push({
+      inlineData: {
+        mimeType: "application/pdf",
+        data: referenceBase64
+      }
+    });
+  }
   
   try {
     const response = await fetch(url, {
@@ -216,11 +232,7 @@ const callGeminiAPI = async (apiKey, model, prompt) => {
       body: JSON.stringify({
         contents: [
           {
-            parts: [
-              {
-                text: prompt
-              }
-            ]
+            parts: parts
           }
         ],
         generationConfig: {
@@ -373,4 +385,64 @@ const extractHtmlContent = (rawText) => {
   
   // Return the raw text as fallback
   return `<div class="a4-page-content whitespace-pre-wrap font-serif">${rawText}</div>`;
+};
+
+/**
+ * Perform a legal and formatting verification on the generated draft against format reference and instructions.
+ */
+export const verifyDraft = async ({
+  provider,
+  apiKey,
+  model,
+  referenceText,
+  referenceBase64,
+  generatedDraft,
+  narrative,
+  docType,
+  metadata
+}) => {
+  if (!apiKey) {
+    throw new Error('API Key is missing. Please configure it in the settings panel.');
+  }
+
+  const prompt = `You are the Senior Secretariat Officer & Legal Consultant for the Andhra Pradesh Co-operative Department.
+Your task is to analyze and verify if the newly generated document draft matches the requested format reference and fully satisfies the Situation & Outcome Narrative instructions.
+
+Reference Document Structure / Style:
+${referenceText || 'See attached PDF document.'}
+
+User's Original Narrative / Instructions:
+${narrative}
+
+Current Generated Document Draft (HTML):
+==================================
+${generatedDraft}
+==================================
+
+Please perform a rigorous verification. Generate a verification report in HTML (wrapped in \`<document_html>...</document_html>\` tag) using a clean, readable layout (with font-serif, styling blocks, and tables). The report MUST contain:
+
+1. **COMPLIANCE STATUS**: Clear overall status (e.g., "PASSED WITH CONSTRAINTS" or "VERIFIED COMPLIANT" or "FAILED ACTION REQUIRED") with a visual badge.
+2. **LAYOUT & SPECIMEN MATCH ANALYSIS**:
+   - Compare the generated draft's structural sequence and margins/headers to the reference file.
+   - For Memo/Proceedings: Verify if header is correctly "MEMORANDUM OF..." or "PROCEEDINGS OF..." followed by the officer name (and "PRESENT:" if Proceedings).
+   - Verify if "Yours faithfully," and officer names are correctly omitted from the signature block at the bottom right.
+   - Verify if the "To" block is placed on the bottom left.
+3. **NARRATIVE COMPLIANCE CHECK**: List the key instructions from the user's narrative and check if they are fully incorporated in the draft body.
+4. **LEGAL & DOM COMPLIANCE**:
+   - Check if the correct Sections of the AP Co-operative Societies Act, 1964 are cited.
+   - Verify if the Tone matches the selected tone (authoritative and professional).
+5. **ACTIONABLE SUGGESTIONS**: Provide a bulleted list of specific changes the user should make or type in the chat to refine the draft further.
+
+Output the report inside \`<document_html>...</document_html>\`. Do not include markdown code block characters like \`\`\`html.`;
+
+  // Invoke the API based on the provider
+  if (provider === 'gemini') {
+    return await callGeminiAPI(apiKey, model, prompt, referenceBase64);
+  } else if (provider === 'openai') {
+    return await callOpenAIAPI(apiKey, model, prompt);
+  } else if (provider === 'anthropic') {
+    return await callAnthropicAPI(apiKey, model, prompt);
+  } else {
+    throw new Error(`Unsupported LLM provider: ${provider}`);
+  }
 };

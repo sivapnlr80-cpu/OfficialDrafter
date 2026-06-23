@@ -15,7 +15,10 @@ import {
   List,
   ListOrdered,
   ZoomIn,
-  ZoomOut
+  ZoomOut,
+  ShieldCheck,
+  RefreshCw,
+  X
 } from 'lucide-react';
 import { exportToDoc } from '../utils/docxExporter';
 
@@ -23,7 +26,17 @@ import { exportToDoc } from '../utils/docxExporter';
  * Simulates a professional A4 sheet with contentEditable rich text editing
  * and a standard formatting toolbar, enabling full document editing in-browser.
  */
-export default function DocumentPreview({ htmlContent, onContentChange, docType, toneMode, draftingLanguage }) {
+export default function DocumentPreview({ 
+  htmlContent, 
+  onContentChange, 
+  docType, 
+  toneMode, 
+  draftingLanguage,
+  onVerify,
+  isVerifying,
+  verificationReport,
+  setVerificationReport
+}) {
   const editorRef = useRef(null);
   const [zoom, setZoom] = useState(1.0);
 
@@ -105,6 +118,19 @@ export default function DocumentPreview({ htmlContent, onContentChange, docType,
                   <ZoomIn className="w-3.5 h-3.5" />
                 </button>
               </div>
+
+              <button
+                onClick={onVerify}
+                disabled={isVerifying}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-indigo-900/40 border border-indigo-500/25 hover:border-indigo-400 hover:bg-indigo-950/60 text-indigo-300 rounded-lg transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isVerifying ? (
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin text-indigo-400" />
+                ) : (
+                  <ShieldCheck className="w-3.5 h-3.5 text-indigo-450" />
+                )}
+                {isVerifying ? 'Verifying...' : 'Verify Draft'}
+              </button>
 
               <button
                 onClick={handleWordExport}
@@ -242,6 +268,47 @@ export default function DocumentPreview({ htmlContent, onContentChange, docType,
           </div>
         )}
       </div>
+
+      {/* Verification Report Modal */}
+      {verificationReport && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in print:hidden">
+          <div className="bg-[#0b0b0f] border border-white/10 rounded-2xl w-full max-w-4xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden glow-card">
+            
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 border-b border-white/5 bg-[#08080a]">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-indigo-400" />
+                <h3 className="text-sm font-bold font-space tracking-wider text-indigo-400 uppercase">Legal & Format Audit Verification</h3>
+              </div>
+              <button
+                onClick={() => setVerificationReport('')}
+                className="p-1 rounded-lg hover:bg-white/5 text-zinc-400 hover:text-white transition-all cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            {/* Modal Body */}
+            <div className="flex-1 overflow-y-auto p-6 scrollbar-thin bg-[#040406] leading-relaxed">
+              <div 
+                className="a4-page-content font-serif text-justify bg-white text-black p-8 rounded-xl shadow-lg border border-zinc-200"
+                dangerouslySetInnerHTML={{ __html: verificationReport }}
+              />
+            </div>
+            
+            {/* Modal Footer */}
+            <div className="p-4 border-t border-white/5 bg-[#08080a] flex justify-end">
+              <button
+                onClick={() => setVerificationReport('')}
+                className="px-4 py-2 text-xs font-semibold bg-zinc-900 border border-white/5 text-zinc-300 rounded-lg hover:bg-zinc-800 transition-colors cursor-pointer"
+              >
+                Close Report
+              </button>
+            </div>
+            
+          </div>
+        </div>
+      )}
     </div>
   );
 }

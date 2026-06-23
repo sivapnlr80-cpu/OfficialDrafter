@@ -6,7 +6,7 @@ import DocumentPreview from './components/DocumentPreview';
 import ChatPanel from './components/ChatPanel';
 import SettingsModal from './components/SettingsModal';
 import Toast from './components/Toast';
-import { callLLM } from './utils/llm';
+import { callLLM, verifyDraft } from './utils/llm';
 import RAGSection from './components/RAGSection';
 import { chunkText, getEmbeddings, retrieveRelevantContext } from './utils/ragEngine';
 import { parseDocument } from './utils/documentParser';
@@ -71,6 +71,10 @@ export default function App() {
   const [ragDocuments, setRagDocuments] = useState([]);
   const [ragChunks, setRagChunks] = useState([]);
   const [isRAGLoading, setIsRAGLoading] = useState(false);
+
+  // Verification States
+  const [verificationReport, setVerificationReport] = useState('');
+  const [isVerifying, setIsVerifying] = useState(false);
 
   // Sync theme to root HTML element
   useEffect(() => {
@@ -170,6 +174,45 @@ export default function App() {
     showToast(`Removed "${docName}" from knowledge database.`, 'info');
   };
 
+  // Perform legal & formatting verification
+  const handleVerifyDraft = async () => {
+    if (!generatedDocument) {
+      showToast('Please generate a draft document first.', 'warning');
+      return;
+    }
+    if (!settings.apiKey) {
+      setIsSettingsOpen(true);
+      showToast('Please configure your API Key in settings first.', 'warning');
+      return;
+    }
+
+    setIsVerifying(true);
+    setVerificationReport(''); // Reset report
+    showToast('Running legal and layout verification...', 'info');
+
+    try {
+      const reportHtml = await verifyDraft({
+        provider: settings.provider,
+        apiKey: settings.apiKey,
+        model: settings.model,
+        referenceText: currentReference ? currentReference.text : '',
+        referenceBase64: currentReference ? currentReference.base64 : null,
+        generatedDraft: generatedDocument,
+        narrative,
+        docType,
+        metadata: formData
+      });
+
+      setVerificationReport(reportHtml);
+      showToast('Verification Report generated successfully!', 'success');
+    } catch (e) {
+      console.error("Verification failed:", e);
+      showToast(e.message || 'Verification failed.', 'error');
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
   // Generate Initial Document Draft
   const handleGenerateDocument = async () => {
     if (!currentReference) {
@@ -207,6 +250,7 @@ export default function App() {
         apiKey: settings.apiKey,
         model: settings.model,
         referenceText: currentReference.text,
+        referenceBase64: currentReference.base64,
         docType,
         metadata: formData,
         draftingLanguage,
@@ -258,6 +302,7 @@ export default function App() {
         apiKey: settings.apiKey,
         model: settings.model,
         referenceText: currentReference.text,
+        referenceBase64: currentReference.base64,
         docType,
         metadata: formData,
         draftingLanguage,
@@ -424,6 +469,10 @@ export default function App() {
             docType={docType}
             toneMode={toneMode}
             draftingLanguage={draftingLanguage}
+            onVerify={handleVerifyDraft}
+            isVerifying={isVerifying}
+            verificationReport={verificationReport}
+            setVerificationReport={setVerificationReport}
           />
         </section>
 

@@ -7,9 +7,24 @@ import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 /**
+ * Helper to convert file to Base64.
+ */
+const fileToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const base64 = reader.result.split(',')[1];
+      resolve(base64);
+    };
+    reader.onerror = error => reject(error);
+  });
+};
+
+/**
  * Extracts raw text from a PDF file.
  * @param {File} file 
- * @returns {Promise<{text: string, pages: number, type: string, name: string}>}
+ * @returns {Promise<{text: string, base64: string, pages: number, type: string, name: string}>}
  */
 export const parsePDF = async (file) => {
   try {
@@ -26,8 +41,11 @@ export const parsePDF = async (file) => {
       fullText += pageText + '\n';
     }
     
+    const base64 = await fileToBase64(file);
+    
     return {
       text: fullText.trim(),
+      base64: base64,
       pages: pdf.numPages,
       type: 'pdf',
       name: file.name
@@ -41,14 +59,16 @@ export const parsePDF = async (file) => {
 /**
  * Extracts raw text from a DOCX file.
  * @param {File} file 
- * @returns {Promise<{text: string, pages: number, type: string, name: string}>}
+ * @returns {Promise<{text: string, base64: string, pages: number, type: string, name: string}>}
  */
 export const parseDOCX = async (file) => {
   try {
     const arrayBuffer = await file.arrayBuffer();
     const result = await mammoth.extractRawText({ arrayBuffer });
+    const base64 = await fileToBase64(file);
     return {
       text: result.value.trim(),
+      base64: base64,
       pages: 1, // Mammoth does not provide page count
       type: 'docx',
       name: file.name
@@ -62,7 +82,7 @@ export const parseDOCX = async (file) => {
 /**
  * Universal document parser wrapper.
  * @param {File} file 
- * @returns {Promise<{text: string, pages: number, type: string, name: string}>}
+ * @returns {Promise<{text: string, base64: string, pages: number, type: string, name: string}>}
  */
 export const parseDocument = async (file) => {
   if (file.name.endsWith('.pdf')) {
